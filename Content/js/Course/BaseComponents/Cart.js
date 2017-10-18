@@ -44,7 +44,12 @@ export function cart(options) {
                         extendFn("商品已经移出购物车");
                         if (o.isfly) {
                             t.parents("li").find(".leftpic p .bottom_img").remove();
-                            $(".add_cart_number").text(--cartNumber);
+                            if(cartNumber>0){
+                                $(".add_cart_number").text(--cartNumber);
+                            }else{
+                                $(".add_cart_number").text("0");
+                            }
+                            
                         }
                     }
 
@@ -59,7 +64,12 @@ export function cart(options) {
                     $(ob.p_node).on("click", ob.node,ob ,cartfn);
 
                 } else if (result.ResultCode != 0 && result.IsLogin == false) {
-                    window.location.href = "/User/login";
+                    if(isFromweixin){
+                        window.location.href = "/weixin/wap/Login?url="+encodeURIComponent(window.location.href)+"&fromwap=1"
+                    }else{
+                        window.location.href = "/User/login";
+                    }
+                    
                 }
                 /*更换图标*/
                 if (result.Data.Status == 1) { //当前的状态1是已经在购物车  变成减号   0 变成购物车
