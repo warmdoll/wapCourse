@@ -4,12 +4,15 @@ import {hint} from '../BaseComponents/Hint';
 window.player = new CloudVodPlayer();
 
 let isfirstplay = true,
-    playTime = 0;
+    playTime = 0,
+    clickNumber=0;
 let VideoInit = function() {
     //初始化播放器;
+    
     $(document).on("videoinit", function() {
         var ww = $(window).width();
         var vu = $("#h_vu").val(); //'5c562a1dd0';//eff9d49f1e   c3826a6499
+        clickNumber=0;
         //创建一个播放器
         var playerConf = {
             "uu": "a91d451d26",
@@ -32,6 +35,8 @@ let VideoInit = function() {
 //回调
 function pcb(type, data) {
     //视频播放完毕
+    console.log(type);
+    
     if (type == "videoStop") {
         if (!isfirstplay) {
             //视频播放完成
@@ -49,7 +54,18 @@ function pcb(type, data) {
         //去除播放结束
         $(".playover").hide(// 开始播放，跳转seekto
         );
-    } else if (type == "videoStart") {
+        
+    } else if(type == "videoResume"){
+        if(clickNumber==0){
+            console.log(clickNumber)
+            $(".add-loading-box").show();
+            clickNumber=1;
+        }
+       
+    }else if(type=="videoPause"){
+        $(".add-loading-box").hide();
+    }else if (type == "videoStart") {
+        $(".add-loading-box").hide();
         let seektotime = $("#h_videostartseek").val();
 
         window.player.sdk.seekTo(seektotime);

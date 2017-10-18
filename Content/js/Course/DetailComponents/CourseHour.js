@@ -72,6 +72,7 @@ export function changeplay() {
 
     })
     $("#Cnt").on('click', ".class_hour[data-type]", function() {
+        $(".add-loading-box").hide();
         let t = $(this),
             type = t.attr("data-type");
         switch (type) {
@@ -162,12 +163,15 @@ let subscribe = function(t) {
                        var dataFlg=data.Data.flag;
                        switch (dataFlg){
                             case 1://未登录
-                                window.location.href="/weixin/wap/usercenter";
+                                //window.location.href="/weixin/wap/usercenter";
+                                window.location.href="/weixin/wap/Login?url="+encodeURIComponent(window.location.href)+"&fromwap=1";
+                                
                             break;
                             case 2://已登录未关注微信公众号
                                 $(".wex-ken-skip.js_skip,.wex-ken-skip .activ-box").show();
                                 othis.find(".rightoperate>em").addClass("subscribed").removeClass("subscribe");
                                 othis.attr("data-type","subscribed");
+                               
                             break;
                             case 3://0                                 
                                     othis.find(".rightoperate>em").addClass("subscribed").removeClass("subscribe");
@@ -189,7 +193,15 @@ let subscribe = function(t) {
         window.location.href = url;
     }
 }
-
+// //设置cookie
+let setCookie=function (c_name, value, expiredays) {
+    var exdate = new Date();
+    exdate.setDate(exdate.getDate() + expiredays);
+    document.cookie = c_name + "=" + escape(value) +
+((expiredays == null) ? "" : ";expires=" + exdate.toGMTString()) + ";path=/;domain=.wangxiao.cn";
+    document.cookie = c_name + "=" + escape(value) +
+((expiredays == null) ? "" : ";expires=" + exdate.toGMTString()) + ";path=/;domain=.wap.wangxiao.cn";
+} 
 
 //取消预约--函数体
 let subscribed = function(t) {
