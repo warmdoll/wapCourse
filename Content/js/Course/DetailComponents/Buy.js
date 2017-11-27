@@ -90,7 +90,7 @@ export function taocanbuy() {
                         let jsondata = JSON.parse(data);
                         if (jsondata.ResultCode == 0) {
                             // 成功
-                            if (typeof fromwchat !== "undefined"&&fromwchat) {
+                            if (typeof isFromWeixin !== "undefined"&&isFromWeixin) {
                                 //如果是微信公众号中跳转到新的登陆页面
                                 window.location.href = "/Book/ShoppingCart?fromwchat=1";
                             }else{
@@ -100,9 +100,10 @@ export function taocanbuy() {
                         } else {
                             if (jsondata.IsLogin == false) {
                                 // 去登陆
-                                if (typeof fromwchat !== "undefined"&&fromwchat) {
+                                if (typeof isFromWeixin !== "undefined"&&isFromWeixin) {
                                     //如果是微信公众号中跳转到新的登陆页面
-                                    window.location.href = "/weixin/wap/PasswordLogin";
+                                    window.location.href = "/weixin/wap/Login?url="+encodeURIComponent(window.location.href)+"&fromwap=1"
+                                    
                                 }else{
                                     window.location.href = "/User/login";
                                 }
@@ -270,7 +271,15 @@ export function taocanbuy() {
                     } else {
                         if (jsondata.IsLogin == false) {
                             // 去登陆
-                            window.location.href = "/User/login";
+                             // 去登陆
+                             if (typeof isFromWeixin !== "undefined"&&isFromWeixin) {
+                                //如果是微信公众号中跳转到新的登陆页面
+                                window.location.href = "/weixin/wap/Login?url="+encodeURIComponent(window.location.href)+"&fromwap=1"
+                                
+                            }else{
+                                window.location.href = "/User/login";
+                            }
+                           
                         } else {
                             hint(jsondata.message, "200px", "30px", 300);
                         }
@@ -297,7 +306,14 @@ export function taocanbuy() {
                     } else {
                         if (jsondata.IsLogin == false) {
                             // 去登陆
-                            window.location.href = "/User/login";
+                             // 去登陆
+                             if (typeof isFromWeixin !== "undefined"&&isFromWeixin) {
+                                //如果是微信公众号中跳转到新的登陆页面
+                                window.location.href = "/weixin/wap/Login?url="+encodeURIComponent(window.location.href)+"&fromwap=1"
+                                
+                            }else{
+                                window.location.href = "/User/login";
+                            }
                         } else {
                             hint(jsondata.message, "200px", "30px", 300);
                         }

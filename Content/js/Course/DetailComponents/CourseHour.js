@@ -273,8 +273,14 @@ let recorded = function(t) {
         $("#player").css("height", $("#player").height()).html("");
 
         $("#h_videostartseek").val(t.attr("data-times"));
-
-        $(document).trigger("videoinit");
+        //乐视播放器
+        let levideo=0;
+        if(levideo==1){
+            $(document).trigger("videoinit");
+        }else{  
+            //阿里播放器
+            $(document).trigger("alivideoinit");
+        }
         $(".needbuywrap").hide();
     } else {
         //还有一种状态是转码中，需要与后台配合编写
